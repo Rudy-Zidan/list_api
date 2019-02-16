@@ -39,4 +39,69 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert_equal response_body['items'][0]['id'], list.items[0].id
     end
   end
+
+  describe 'Get #show' do
+    let(:list) { List.first }
+
+    test 'respond with 200 with deleted_at equal to nil' do
+      get list_path(list)
+
+      assert_response :success
+      response_body = JSON.parse(response.body)
+
+      assert_equal response_body['id'], list.id
+    end
+
+    test 'respond with 200 with soft deleted list' do
+      list.destroy
+      get list_path(list)
+
+      assert_response :success
+      response_body = JSON.parse(response.body)
+
+      assert_equal response_body['id'], list.id
+    end
+  end
+
+  describe 'POST #create' do
+    test 'create a list' do
+      params = {
+        name: 'Test 2',
+        items_attributes: [
+          {
+            title: 'Test item',
+            description: 'This is a test'
+          }
+        ]
+      }
+
+      post lists_path, params: params
+
+      assert_response :created
+      response_body = JSON.parse(response.body)
+      list = List.last
+      assert_equal response_body['id'], list.id
+    end
+
+    test 'failed to create due to validation errors' do
+      params = {
+        items_attributes: [
+          {
+            description: 'This is a test'
+          },
+          {
+            description: 'This is a test'
+          }
+        ]
+      }
+
+      post lists_path, params: params
+
+      assert_response :unprocessable_entity
+      response_body = JSON.parse(response.body)
+      
+      assert_equal response_body['items.title'], ["can't be blank"]
+      assert_equal response_body['name'], ["can't be blank"]
+    end
+  end
 end
