@@ -22,6 +22,20 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  describe 'PUT #restore' do
+    let(:item) { Item.first }
+
+    test 'should restore a soft deleted item with response code 200' do
+      item.destroy
+      put restore_item_path(item)
+
+      assert_response :success
+      response_body = JSON.parse(response.body)
+
+      assert_nil response_body['deleted_at']
+    end
+  end
+
   describe 'DELETE #delete' do
     let(:item) { Item.first }
 

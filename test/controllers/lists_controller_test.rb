@@ -189,6 +189,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     let(:list) { List.first }
 
     test 'should restore a soft deleted list with response code 200' do
+      list.destroy
       put restore_list_path(list)
 
       assert_response :success
