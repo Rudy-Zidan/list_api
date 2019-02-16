@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i(show)
+  before_action :set_list, only: %i(show update)
 
   def index
     render json: List.all, include: :items, status: :ok
@@ -20,6 +20,16 @@ class ListsController < ApplicationController
       render json: list.errors.messages, status: :unprocessable_entity
     else
       render json: list, include: :items, status: :created
+    end
+  end
+
+  def update
+    @list.update(list_params)
+
+    if @list.errors.any?
+      render json: @list.errors.messages, status: :unprocessable_entity
+    else
+      render json: @list, include: :items, status: :ok
     end
   end
 
