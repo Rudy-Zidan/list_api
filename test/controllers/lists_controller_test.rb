@@ -152,4 +152,17 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert_equal response_body['name'], ["can't be blank"]
     end
   end
+
+  describe 'DELETE #destroy' do
+    let(:list) { List.first }
+
+    test 'should soft delete a list with response code 200' do
+      delete list_path(list)
+
+      assert_response :success
+      response_body = JSON.parse(response.body)
+
+      assert response_body['deleted_at']
+    end
+  end
 end
