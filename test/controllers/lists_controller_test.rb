@@ -165,4 +165,17 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert response_body['deleted_at']
     end
   end
+
+  describe 'PUT #restore' do
+    let(:list) { List.first }
+
+    test 'should restore a soft deleted list with response code 200' do
+      put restore_list_path(list)
+
+      assert_response :success
+      response_body = JSON.parse(response.body)
+
+      assert_nil response_body['deleted_at']
+    end
+  end
 end

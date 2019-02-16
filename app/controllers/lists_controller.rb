@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i(show update destroy)
+  before_action :set_list, only: %i(show update destroy restore)
 
   def index
     render json: List.all, include: :items, status: :ok
@@ -35,6 +35,12 @@ class ListsController < ApplicationController
 
   def destroy
     @list.destroy
+
+    render json: @list, include: :items, status: :ok
+  end
+
+  def restore
+    @list.restore!
 
     render json: @list, include: :items, status: :ok
   end
