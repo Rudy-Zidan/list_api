@@ -21,4 +21,15 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
       assert_equal response_body['list']['id'], item.list.id
     end
   end
+
+  describe 'DELETE #delete' do
+    let(:item) { Item.first }
+
+    test 'should delete an item permanent with response code 200' do
+      delete delete_item_path(item)
+
+      assert_response :success
+      assert_nil Item.with_deleted.find_by_id(item.id)
+    end
+  end
 end
