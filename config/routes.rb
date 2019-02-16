@@ -4,9 +4,10 @@ Rails.application.routes.draw do
     collection do
       get :trash
     end
-    
+
     member do
       put :restore
+      delete :delete
     end
   end
 end

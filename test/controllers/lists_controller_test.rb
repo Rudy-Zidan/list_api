@@ -178,4 +178,15 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert_nil response_body['deleted_at']
     end
   end
+
+  describe 'DELETE #delete' do
+    let(:list) { List.first }
+
+    test 'should delete a list permanent with response code 200' do
+      delete delete_list_path(list)
+
+      assert_response :success
+      assert_nil List.with_deleted.find_by_id(list.id)
+    end
+  end
 end
