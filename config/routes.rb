@@ -10,4 +10,10 @@ Rails.application.routes.draw do
       delete :delete
     end
   end
+
+  resources :items, only: [] do
+    collection do
+      get :trash
+    end
+  end
 end
