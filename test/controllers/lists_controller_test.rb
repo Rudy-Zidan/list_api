@@ -130,6 +130,25 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert_equal response_body['id'], list.id
     end
 
+    test 'soft delete items from a list' do
+      params = {
+        id: list.id,
+        items_attributes: [
+          {
+            id: item.id,
+            _destroy: true
+          }
+        ]
+      }
+
+      put list_path(list), params: params
+
+      assert_response :success
+      response_body = JSON.parse(response.body)
+      list = List.last
+      assert_empty response_body['items']
+    end
+
     test 'failed to create due to validation errors' do
       params = {
         id: list.id,
