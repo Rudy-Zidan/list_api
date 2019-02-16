@@ -1,4 +1,4 @@
-record1:
+list1:
   id: 1
   name: Test
   deleted_at: nil
