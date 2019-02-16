@@ -26,7 +26,7 @@ class ItemTest < ActiveSupport::TestCase
     assert item.deleted?
   end
 
-  test 'restore a soft deleted list' do
+  test 'restore a soft deleted item' do
     item = Item.first
     item.destroy
     item.restore!
