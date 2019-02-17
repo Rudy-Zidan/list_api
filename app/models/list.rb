@@ -4,6 +4,7 @@ class List < ApplicationRecord
   include Concerns::SoftDelete
 
   has_many :items, dependent: :delete_all
+  has_many :active_items, -> { where(deleted_at: nil) }, class_name: 'Item'
 
   validates :name, presence: true
 

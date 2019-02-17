@@ -2,7 +2,7 @@ class ListsController < ApplicationController
   before_action :set_list, only: %i(show update destroy restore delete)
 
   def index
-    render json: List.all.includes(:items), include: :items, status: :ok
+    render json: List.all.includes(:active_items), include: :active_items, status: :ok
   end
 
   def trash

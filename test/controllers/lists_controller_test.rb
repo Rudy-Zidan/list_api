@@ -16,7 +16,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       response_body = JSON.parse(response.body).first
 
       assert_equal response_body['id'], list.id
-      assert_equal response_body['items'][0]['id'], list.items[0].id
+      assert_equal response_body['active_items'][0]['id'], list.items[0].id
     end
   end
 
