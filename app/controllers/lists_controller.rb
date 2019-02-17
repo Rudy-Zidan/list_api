@@ -54,7 +54,7 @@ class ListsController < ApplicationController
   private
 
   def set_list
-    @list = List.with_deleted.find(params[:id])
+    @list = List.with_deleted.includes(:items).find(params[:id])
   end
 
   def list_params

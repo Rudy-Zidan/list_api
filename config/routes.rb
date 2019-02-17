@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :items, only: [] do
+  resources :items, only: %i(destroy) do
     collection do
       get :trash
     end
