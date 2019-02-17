@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i(restore delete)
 
   def trash
-    render json: Item.only_deleted, include: :list, status: :ok
+    render json: Item.only_deleted.includes(:items), include: :list, status: :ok
   end
 
   def restore

@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+(0..10).each do |i|
+  List.create(
+    name: Faker::Food.dish,
+    items_attributes: (0..rand(1...5)).map do |i|
+      {
+        title: Faker::Food.spice,
+        description: Faker::Food.description
+      }
+    end
+  )
+end
