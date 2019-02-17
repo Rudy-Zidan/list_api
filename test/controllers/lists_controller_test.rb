@@ -132,7 +132,6 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
 
     test 'soft delete items from a list' do
       params = {
-        id: list.id,
         items_attributes: [
           {
             id: item.id,
