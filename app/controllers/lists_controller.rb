@@ -17,7 +17,7 @@ class ListsController < ApplicationController
     list = List.create(list_params)
 
     if list.errors.any?
-      render json: list.errors.messages, status: :unprocessable_entity
+      render json: list.pretty_validation_errors, status: :unprocessable_entity
     else
       render json: list, include: :items, status: :created
     end

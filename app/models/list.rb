@@ -1,6 +1,7 @@
 class List < ApplicationRecord
   default_scope -> { where(deleted_at: nil) }
 
+  include Concerns::Errors
   include Concerns::SoftDelete
 
   has_many :items, dependent: :delete_all

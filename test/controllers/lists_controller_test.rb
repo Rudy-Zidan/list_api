@@ -100,8 +100,10 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert_response :unprocessable_entity
       response_body = JSON.parse(response.body)
 
-      assert_equal response_body['items.title'], ["can't be blank"]
-      assert_equal response_body['name'], ["can't be blank"]
+      assert_equal response_body['errors'][0]['field'], 'items.title'
+      assert_equal response_body['errors'][0]['detailed_message'], "can't be blank"
+      assert_equal response_body['errors'][1]['field'], 'name'
+      assert_equal response_body['errors'][1]['detailed_message'], "can't be blank"
     end
   end
 
