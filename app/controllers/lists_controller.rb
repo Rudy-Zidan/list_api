@@ -34,7 +34,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list.destroy
+    @list.soft_delete!
 
     render json: @list, include: :items, status: :ok
   end
@@ -46,7 +46,7 @@ class ListsController < ApplicationController
   end
 
   def delete
-    @list.really_destroy!
+    @list.destroy
 
     head :ok
   end
@@ -59,7 +59,7 @@ class ListsController < ApplicationController
 
   def list_params
     params.permit(
-      :id, :name, items_attributes: %i(id title description _destroy)
+      :id, :name, items_attributes: %i(id title description)
     )
   end
 end

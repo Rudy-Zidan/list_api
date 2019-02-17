@@ -15,20 +15,20 @@ class ListTest < ActiveSupport::TestCase
 
   test 'soft delete a list' do
     list = List.first
-    list.destroy
+    list.soft_delete!
     assert list.deleted?
   end
 
   test 'restore a soft deleted list' do
     list = List.first
-    list.destroy
+    list.soft_delete!
     list.restore!
     assert_not list.deleted?
   end
 
   test 'really_destroy a list' do
     list = List.first
-    list.really_destroy!
+    list.destroy
     assert_not list.persisted?
     assert Item.where(list_id: list.id).empty?
   end

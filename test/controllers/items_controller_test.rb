@@ -5,7 +5,7 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     let(:item) { Item.first }
 
     before do
-      item.destroy
+      item.soft_delete!
       get trash_items_path
     end
 
@@ -39,7 +39,7 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     let(:item) { Item.first }
 
     test 'should restore a soft deleted item with response code 200' do
-      item.destroy
+      item.soft_delete!
       put restore_item_path(item)
 
       assert_response :success

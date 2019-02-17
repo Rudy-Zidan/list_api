@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
+    @item.soft_delete!
 
     render json: @item, include: :list, status: :ok
   end
@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
   end
 
   def delete
-    @item.really_destroy!
+    @item.destroy
 
     head :ok
   end

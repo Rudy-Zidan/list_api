@@ -24,7 +24,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     let(:list) { List.first }
 
     before do
-      list.destroy
+      list.soft_delete!
       get trash_lists_path
     end
 
@@ -53,7 +53,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'respond with 200 with soft deleted list' do
-      list.destroy
+      list.soft_delete!
       get list_path(list)
 
       assert_response :success
@@ -130,24 +130,6 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       assert_equal response_body['id'], list.id
     end
 
-    test 'soft delete items from a list' do
-      params = {
-        items_attributes: [
-          {
-            id: item.id,
-            _destroy: true
-          }
-        ]
-      }
-
-      put list_path(list), params: params
-
-      assert_response :success
-      response_body = JSON.parse(response.body)
-      list = List.last
-      assert_empty response_body['items']
-    end
-
     test 'failed to create due to validation errors' do
       params = {
         id: list.id,
@@ -188,7 +170,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     let(:list) { List.first }
 
     test 'should restore a soft deleted list with response code 200' do
-      list.destroy
+      list.soft_delete!
       put restore_list_path(list)
 
       assert_response :success

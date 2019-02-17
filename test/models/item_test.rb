@@ -22,13 +22,13 @@ class ItemTest < ActiveSupport::TestCase
 
   test 'soft delete an item' do
     item = Item.first
-    item.destroy
+    item.soft_delete!
     assert item.deleted?
   end
 
   test 'restore a soft deleted item' do
     item = Item.first
-    item.destroy
+    item.soft_delete!
     item.restore!
     assert_not item.deleted?
   end
@@ -36,7 +36,7 @@ class ItemTest < ActiveSupport::TestCase
   test 'really_destroy an item' do
     item = Item.first
     list = item.list
-    item.really_destroy!
+    item.destroy
     assert_not item.persisted?
     assert list.reload
   end
