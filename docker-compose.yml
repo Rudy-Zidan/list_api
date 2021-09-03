@@ -1,0 +1,10 @@
+version: "3"
+services:
+  database:
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=list_api_development
+    ports:
+      - "5432:5432"

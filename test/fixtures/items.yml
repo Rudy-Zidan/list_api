@@ -1,0 +1,8 @@
+item1:
+  id: 1
+  list_id: 1
+  title: Test
+  description: This is a test
+  deleted_at: nil
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>
