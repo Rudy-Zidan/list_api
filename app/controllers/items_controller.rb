@@ -30,4 +30,8 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.with_deleted.includes(:list).find(params[:id])
   end
+
+  def dummy(x)
+   puts "makes lint fail"
+  end
 end
